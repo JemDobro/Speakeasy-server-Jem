@@ -15,6 +15,7 @@
   "author": "Joe Turner <jturner@thinkful.com>",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.4",
     "dotenv": "^6.1.0",
     "express": "^4.16.3",
@@ -23,6 +24,8 @@
     "mongoose-type-email": "^1.0.9",
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "pg": "^7.4.3"
   },
   "devDependencies": {

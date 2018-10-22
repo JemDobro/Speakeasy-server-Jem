@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-require('mongoose-type-email');
 
 const bcrypt = require('bcryptjs');
 
@@ -14,7 +13,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   username: {
-    type: mongoose.SchemaTypes.Email,
+    type: String,
     required: true, 
     unique: true
   },

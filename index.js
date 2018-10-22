@@ -3,6 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
@@ -10,7 +11,7 @@ const { dbConnect } = require('./db-mongoose');
 const localStrategy = require('./passport/local');
 const jwtStrategy = require('./passport/jwt');
 
-
+const questionsRouter = require('./routes/questions');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 
@@ -21,6 +22,8 @@ app.use(
     skip: (req, res) => process.env.NODE_ENV === 'test'
   })
 );
+
+app.use(bodyParser.json());
 
 app.use(
   cors({
@@ -34,8 +37,9 @@ passport.use(jwtStrategy);
 const localAuth = passport.authenticate('local', { session: false, failWithError: true }); 
 const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });  
 
+app.use('/api/questions', questionsRouter);
 app.use('/api/users/', usersRouter);
-app.use('/api', authRouter);
+app.use('/api/auth', authRouter);
 
 function runServer(port = PORT) {
   const server = app
@@ -50,7 +54,9 @@ function runServer(port = PORT) {
 
 if (require.main === module) {
   dbConnect();
+  console.log('dbConnect ran');
   runServer();
+  console.log('runServer ran');
 }
 
 module.exports = { app };
