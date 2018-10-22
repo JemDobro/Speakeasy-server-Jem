@@ -41,6 +41,8 @@ app.use('/api/questions', questionsRouter);
 app.use('/api/users/', usersRouter);
 app.use('/api/auth', authRouter);
 
+console.log('app-server is deployed');
+
 function runServer(port = PORT) {
   const server = app
     .listen(port, () => {
