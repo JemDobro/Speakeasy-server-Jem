@@ -37,7 +37,7 @@ passport.use(jwtStrategy);
 const localAuth = passport.authenticate('local', { session: false, failWithError: true }); 
 const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });  
 
-app.use('/api/questions', questionsRouter);
+app.use('/api/questions', jwtAuth, questionsRouter);
 app.use('/api/users/', usersRouter);
 app.use('/api/auth', authRouter);
 
