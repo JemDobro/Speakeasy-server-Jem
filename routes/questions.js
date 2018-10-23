@@ -2,14 +2,14 @@
 const express = require('express');
 const mongoose = require ('mongoose');
 
-const Question = require('../models/question');
+const questions = require('../models/question');
 
 const router = express.Router();
 
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
 
-  Question.find()
+  questions.find()
     .then(results => {
       res.json(results);
     })
@@ -30,7 +30,7 @@ router.get('/:id', (req, res, next) => {
     return next(err);
   }
 
-  Question.findById({ _id: id /*userId*/ })
+  questions.findById({ _id: id /*userId*/ })
     .then(result => {
       if (result) {
         res.json(result);
