@@ -6,10 +6,10 @@ const questions = require('../models/question');
 
 const router = express.Router();
 
-/* ========== GET/READ ALL ITEMS ========== */
+/* ========== GET/READ ALL QUESTIONS ========== */
 router.get('/', (req, res, next) => {
 
-  questions.find()
+  questions.find().select('question')
     .then(results => {
       res.json(results);
     })
