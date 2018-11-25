@@ -47,7 +47,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/:id', (req, res, next) => {
   const { id } = req.params;
   const { answer } = req.body;
-  console.log('id:', id, 'answer:', answer);
+  console.log('id:', id, 'answer:', answer);  //not getting here with local, but works fine with postman
 
   /***** Never trust users - validate input *****/
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -65,8 +65,8 @@ router.post('/:id', (req, res, next) => {
         } else {
           result.memoryStrength = 1;
         }
-        console.log(result);
-        res.json(result);
+        console.log(result);  //sends with memoryStrength doubled, not currently persisting/saving
+        res.json(result);  //result is being sent back to postman
       } else {
         next();
       }

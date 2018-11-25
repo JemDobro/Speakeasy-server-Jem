@@ -18,8 +18,13 @@ const authRouter = require('./routes/auth');
 const app = express();
 
 app.use(
-  cors()
+  cors({
+    origin: CLIENT_ORIGIN
+  })
 );
+// app.use(
+//   cors()
+// );
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
@@ -28,12 +33,6 @@ app.use(
 );
 
 app.use(bodyParser.json());
-
-// app.use(
-//   cors({
-//     // origin: CLIENT_ORIGIN
-//   })
-// );
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
