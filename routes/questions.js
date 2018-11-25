@@ -43,5 +43,39 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
+/* ========== POST ANSWER TO SINGLE QUESTION ========== */
+router.post('/:id', (req, res, next) => {
+  const { id } = req.params;
+  const { answer } = req.body;
+  console.log('id:', id, 'answer:', answer);
+
+  /***** Never trust users - validate input *****/
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  questions.findById({ _id: id })
+    .then(result => {
+      if (result) {
+        console.log(result);
+        if (answer === result.answer) {
+          result.memoryStrength = result.memoryStrength * 2;          
+        } else {
+          result.memoryStrength = 1;
+        }
+        console.log(result);
+        res.json(result);
+      } else {
+        next();
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      next(err);
+    });
+});
+
 
 module.exports = router;

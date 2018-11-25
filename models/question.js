@@ -9,4 +9,12 @@ const questionSchema = new mongoose.Schema ({
   next: Number
 });
 
+questionSchema.set('toObject', {
+  virtuals: true,
+  transform: (doc, result) => {
+    delete result._id;
+    delete result.next;
+  }
+});
+
 module.exports = mongoose.model('Question', questionSchema);
