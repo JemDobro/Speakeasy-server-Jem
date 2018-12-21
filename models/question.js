@@ -5,7 +5,7 @@ const mongoose = require ('mongoose');
 const questionSchema = new mongoose.Schema ({
   question: { type: String, required: true },
   answer: { type: String, required: true },
-  memoryStrength: Number,
+  memoryStrength: {type: Number, default: 1},
   next: Number
 });
 

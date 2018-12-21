@@ -47,7 +47,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/:id', (req, res, next) => {
   const { id } = req.params;
   const { answer } = req.body;
-  console.log('id:', id, 'answer:', answer);  //not getting here with local, but works fine with postman
+  console.log('id:', id, 'answer:', answer); 
 
   /***** Never trust users - validate input *****/
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -61,7 +61,7 @@ router.post('/:id', (req, res, next) => {
       if (result) {
         console.log(result);
         if (answer === result.answer) {
-          result.memoryStrength = result.memoryStrength * 2;          
+          result.memoryStrength = result.memoryStrength * 2;         
         } else {
           result.memoryStrength = 1;
         }
