@@ -20,15 +20,41 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  questions: [
+    {
+      _id: mongoose.Schema.Types.ObjectId,
+      question: String,
+      answer: String,
+      memoryStrength: Number,
+      next: Number
+    }
+  ],
+  head: {
+    type: Number,
+    default: 0
+  },
+  allTimeAttempted: {
+    type: Number,
+    default: 0
+  },
+  allTimeCorrect: {
+    type: Number,
+    default: 0
   }
 });
 
 userSchema.set('toObject', {
   virtuals: true,
   transform: (doc, result) => {
-    delete result._id;
-    delete result.__v;
-    delete result.password;
+    return {
+      id: result.id,
+      firstName: result.firstName,
+      questions: result.questions,
+      head: result.head,
+      allTimeAttempted: result.allTimeAttempted,
+      allTimeCorrect: result.allTimeCorrect
+    };
   }
 });
 
