@@ -22,9 +22,6 @@ app.use(
     origin: CLIENT_ORIGIN
   })
 );
-// app.use(
-//   cors()
-// );
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
