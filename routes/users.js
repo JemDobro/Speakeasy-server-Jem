@@ -96,13 +96,10 @@ router.post('/', (req, res, next) => {
       return User.create(newUser);
     })
     .then(result => {
-      let userStats = {
-        firstName: result.firstName,
-        allTimeAttempted: result.allTimeAttempted,
-        allTimeCorrect: result.allTimeCorrect
+      let userfirstName = {
+        firstName: result.firstName
       };
-      console.log(userStats);
-      return res.status(201).location(`/api/users/${result.id}`).json(userStats);
+      return res.status(201).location(`/api/users/${result.id}`).json(userfirstName);
     })
     .catch(err => {
       if (err.code === 11000) {
@@ -114,7 +111,7 @@ router.post('/', (req, res, next) => {
 });
 
 
-/* ========== GET/READ ALL QUESTIONS ========== */
+/* ========== GET/READ ALL QUESTIONS, RETURN QUESTION AT HEAD ========== */
 router.get('/next', (req, res, next) => {
   const userId = req.user.id;
   /***** Never trust users - validate input *****/
@@ -126,7 +123,6 @@ router.get('/next', (req, res, next) => {
   User.findById(userId) 
     .then(result => {
       let question = result.questions[result.head].question;
-      console.log(question);
       res.json(question);
     })
     .catch(err => {
@@ -139,7 +135,7 @@ router.get('/next', (req, res, next) => {
 router.post('/answer', (req, res, next) => {
   const userId = req.user.id;
   const { answer } = req.body;
-  // console.log('userId:', userId, 'answer:', answer); 
+
 
   /***** Never trust users - validate input *****/
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -151,48 +147,69 @@ router.post('/answer', (req, res, next) => {
   User.findById(userId)
     .then(result => {
       if (result) {
-        // console.log(result);
-        let currHead = result.head; //save value of current head
-        let currQuestion = result.questions[result.head]; //save node just answered
-        console.log('early currQuestion:', currQuestion);
-        result.head = currQuestion.next;  //changed value of head here to point to next question
-        if (answer === currQuestion.answer) {
+        let currHead = result.head; //save value of current head, then can change result.head to point to next question
+        let currQuestion = result.questions[result.head]; //save node(full question) just answered
+        result.head = currQuestion.next;  //changed value of head here to point to next question so that will be the next question retrieved when ready to show the next question to the client side
+        if (answer.toUpperCase() === currQuestion.answer.toUpperCase()) {
           currQuestion.memoryStrength = currQuestion.memoryStrength * 2; 
           result.allTimeCorrect = result.allTimeCorrect + 1;     
         } else {
           currQuestion.memoryStrength = 1;
         } //evaluated memoryStrength for new location
-        let answeredQuestion = currQuestion;
-        for (let i = 0; i < currQuestion.memoryStrength; i++) {
-          if (answeredQuestion.next === null) {
-            break;
+        if (currQuestion.memoryStrength > result.questions.length) { //this is here so we won't have to go through loop at all if not needed.  Once it is longer than the length of the array, it will go immediately to the end.
+          let lastQuestion = result.questions.filter(question => question.next === null); //find last question in linkedlist
+          lastQuestion[0].next = currHead; //point lastQuestion to currQuestion
+          currQuestion.next = null; //point currQuestion to null, putting it at end of list
+        } else {
+          let answeredQuestion = currQuestion; //like creating a copy of current question in a variable called answeredQuestion so answeredQuestion can change without changing currQuestion. currQuestion.next will change at very end
+          for (let i = 0; i < currQuestion.memoryStrength; i++) {//keep looping through one by one until the number of times of memoryStrength
+            if (answeredQuestion.next === null) {     
+              break;
+            }
+            let nextQuestionIndex = answeredQuestion.next; //gets index of nextQuestion every time answeredQuestion advances one
+            let nextQuestion = result.questions[nextQuestionIndex]; //gets the nextQuestion
+            answeredQuestion = nextQuestion; //sets answeredQuestion to equal nextQuestion...advances our loop by one, then loops again until we either get to the end, or we have looped the number of times of the memoryStrength value.  Once that happens, answeredQuestion is the question we need to put currQuestion after.
           }
-          let nextQuestionIndex = answeredQuestion.next;
-          let nextQuestion = result.questions[nextQuestionIndex];
-          answeredQuestion = nextQuestion;
-          console.log(answeredQuestion);
+          currQuestion.next = answeredQuestion.next;  //sets currQuestion.next to point where answeredQuestion.next is pointing, whether it is null, or points to another question...this slides currQuestion into that spot
+          answeredQuestion.next = currHead; //points answeredQuestion.next to the index of our currQuestion
         }
-        currQuestion.next = answeredQuestion.next;
-        answeredQuestion.next = currHead;
-        console.log('currQuestion late:', currQuestion, 'pointing to currQuestion late:', answeredQuestion);
 
         result.allTimeAttempted = result.allTimeAttempted + 1;    
-        // console.log(result);  //sends with memoryStrength doubled, not currently persisting/saving
         result.save();
-        let userStats = {
+        let answerResult = {
+          firstName: result.firstName,
           memoryStrength: currQuestion.memoryStrength,
-          answer: currQuestion.answer,
-          allTimeAttempted: result.allTimeAttempted,
-          allTimeCorrect: result.allTimeCorrect
+          answer: currQuestion.answer
         };
-        console.log(userStats);
-        res.json(userStats);  //result is being sent back to postman
+        res.json(answerResult);
       } else {
         next();
       }
     })
     .catch(err => {
-      console.log(err);
+      next(err);
+    });
+});
+
+/* ========== GET CURRENT USER ALL TIME STATS ========== */
+router.get('/stats', (req, res, next) => {
+  const userId = req.user.id;
+  /***** Never trust users - validate input *****/
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    const err = new Error('The `userId` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+  User.findById(userId) 
+    .then(result => {
+      let userAllTimeStats = {
+        firstName: result.firstName,
+        allTimeAttempted: result.allTimeAttempted,
+        allTimeCorrect: result.allTimeCorrect
+      };
+      res.json(userAllTimeStats);
+    })
+    .catch(err => {
       next(err);
     });
 });
