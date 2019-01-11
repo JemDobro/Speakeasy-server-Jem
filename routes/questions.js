@@ -6,8 +6,6 @@ const questions = require('../models/question');
 
 const router = express.Router();
 
-//Questions now live on user, should not need this at all
-
 /* ========== GET/READ ALL QUESTIONS ========== */
 router.get('/', (req, res, next) => {
 

@@ -3,7 +3,6 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-// const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
@@ -56,8 +55,6 @@ app.use((err, req, res, next) => {
   }
 });
 
-console.log('app-server is deployed');
-
 function runServer(port = PORT) {
   const server = app
     .listen(port, () => {
@@ -71,9 +68,7 @@ function runServer(port = PORT) {
 
 if (require.main === module) {
   dbConnect();
-  console.log('dbConnect ran');
   runServer();
-  console.log('runServer ran');
 }
 
 module.exports = { app };
