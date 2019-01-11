@@ -1,6 +1,6 @@
 ![Speakeasy Logo][logo]
 
-[logo]: public/img/speakeasy-logo2.png
+[logo]: img/speakeasy-logo2.png
 
 Do you find yourself nodding along with your smart tech friends, coworkers, or worse, your boss, as if you understand the latest tech jargon? Step into Speakeasy to learn the language through spaced repetition, up your stats and your status as you keep up to date with all the latest secret knocks that open doors... **_[Become one of the club here](https://speakeasy-client-two.herokuapp.com// "Speakeasy")_**&nbsp;
 
@@ -18,11 +18,11 @@ Do you find yourself nodding along with your smart tech friends, coworkers, or w
  * Users are presented questions using a spaced repetition algorithm.  When a question is answered correctly, the time interval before it is seen again increases.  When a question is answered incorrectly, the user will see the question again after the next question.
 
 ## Screenshots
-| <img alt="Landing Page" src="public/img/LandingPage.PNG" width="350"> | <img alt="LogIn" src="public/img/LogIn.PNG" width="350"> | <img alt="Registration" src="public/img/Registration.PNG" width="350"> | 
+| <img alt="Landing Page" src="img/LandingPage.PNG" width="350"> | <img alt="LogIn" src="img/LogIn.PNG" width="350"> | <img alt="Registration" src="img/Registration.PNG" width="350"> | 
 |:---:|:---:|:---:|
 | Landing Page | Login | Registration |
 
-| <img alt="Question" src="public/img/Question.PNG" width="350"> | <img alt="After Answer Submission" src="public/img/AfterAnswerSubmission.PNG" width="350"> | <img alt="After Incorrect Answer Plus All Time Stats" src="public/img/AfterIncorrectAnswerSubmission.PNG" width="350"> |
+| <img alt="Question" src="img/Question.PNG" width="350"> | <img alt="After Answer Submission" src="img/AfterAnswerSubmission.PNG" width="350"> | <img alt="After Incorrect Answer Plus All Time Stats" src="img/AfterIncorrectAnswerSubmission.PNG" width="350"> |
 |:---:|:---:|:---:|
 | Question | After Answer Submission | After Incorrect Answer Plus All Time Stats |
 
