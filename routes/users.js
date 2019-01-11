@@ -101,7 +101,7 @@ router.post('/', (req, res, next) => {
         lastName,
         username,
         password: digest,
-        questions: results,
+        questions: results
       };
       return User.create(newUser);
     })
@@ -115,7 +115,7 @@ router.post('/', (req, res, next) => {
     })
     .catch(err => {
       if (err.code === 11000) {
-        err = new Error('This email already belongs to a registered user.');
+        err = new Error(`This username already belongs to a registered user.`);
         err.status = 400;
         err.location = 'username';
         err.reason = 'ValidationError';
