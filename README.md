@@ -1,45 +1,53 @@
-# Thinkful Backend Template
+![Speakeasy Logo][logo]
 
-A template for developing and deploying Node.js apps.
+[logo]: public/img/speakeasy-logo2.png
 
-## Getting started
+Do you find yourself nodding along with your smart tech friends, coworkers, or worse, your boss, as if you understand the latest tech jargon? Step into Speakeasy to learn the language through spaced repetition, up your stats and your status as you keep up to date with all the latest secret knocks that open doors... **_[Become one of the club here](https://speakeasy-client-two.herokuapp.com// "Speakeasy")_**&nbsp;
 
-### Setting up a project
+#### Demo account:
+##### username: ellafitzgerald
+##### password: ellafitzgerald
 
-* Move into your projects directory: `cd ~/YOUR_PROJECTS_DIRECTORY`
-* Clone this repository: `git clone https://github.com/Thinkful-Ed/backend-template YOUR_PROJECT_NAME`
-* Move into the project directory: `cd YOUR_PROJECT_NAME`
-* Install the dependencies: `npm install`
-* Create a new repo on GitHub: https://github.com/new
-    * Make sure the "Initialize this repository with a README" option is left unchecked
-* Update the remote to point to your GitHub repository: `git remote set-url origin https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME`
+## Feature List
+ * Users are first taken to an introductory landing page where they can login or register.
+ * Users can learn what to expect by clicking About, which is available before login and while logged in.
+ * Users will be automatically logged in upon successful account creation, and once logged in they are taken to their dashboard, where they will be presented with a question and a place to submit their answer.
+ * Upon submission of an answer, users will receive immediate feedback letting them know if they were correct. If not, they will be given the correct answer so they can learn it. Users can move to the next question when they are ready by clicking Next.
+ * Users will see their Session Stats as they are answering questions, and they can reset their stats for the session.
+  * Users can see or hide their All Time Stats (their stats since account creation) by clicking All Time Stats.  These stats are updated as each question is answered.
+ * Users are presented questions using a spaced repetition algorithm.  When a question is answered correctly, the time interval before it is seen again increases.  When a question is answered incorrectly, the user will see the question again after the next question.
 
-### Working on the project
+## Screenshots
+| <img alt="Landing Page" src="public/img/LandingPage.PNG" width="350"> | <img alt="LogIn" src="public/img/LogIn.PNG" width="350"> | <img alt="Registration" src="public/img/Registration.PNG" width="350"> | 
+|:---:|:---:|:---:|
+| Landing Page | Login | Registration |
 
-* Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-* Run the development task: `npm start`
-    * Starts a server running at http://localhost:8080
-    * Automatically restarts when any of your files change
+| <img alt="Question" src="public/img/Question.PNG" width="350"> | <img alt="After Answer Submission" src="public/img/AfterAnswerSubmission.PNG" width="350"> | <img alt="After Incorrect Answer Plus All Time Stats" src="public/img/AfterIncorrectAnswerSubmission.PNG" width="350"> |
+|:---:|:---:|:---:|
+| Question | After Answer Submission | After Incorrect Answer Plus All Time Stats |
 
-## Databases
+## Tech Stack:
+### Frontend
 
-By default, the template is configured to connect to a MongoDB database using Mongoose.  It can be changed to connect to a PostgreSQL database using Knex by replacing any imports of `db-mongoose.js` with imports of `db-knex.js`, and uncommenting the Postgres `DATABASE_URL` lines in `config.js`.
+  * HTML5
+  * CSS3
+  * JavaScript
+  * React
+  * Redux
+  * Deployed to Heroku
 
-## Deployment
+### Backend
 
-Requires the [Heroku CLI client](https://devcenter.heroku.com/articles/heroku-command-line).
+  * Node/Express
+  * MongoDB/Mongoose/mLab
+  * JWTs for authentication
+  * Deployed to Heroku
 
-### Setting up the project on Heroku
+This is the backend for this app.  **_[The frontend can be found here.](https://github.com/JemDobro/Speakeasy-client-Jem "Speakeasy Frontend")_**
 
-* Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-* Create the Heroku app: `heroku create PROJECT_NAME`
-
-* If your backend connects to a database, you need to configure the database URL:
-    * For a MongoDB database: `heroku config:set DATABASE_URL=mongodb://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
-    * For a PostgreSQL database: `heroku config:set DATABASE_URL=postgresql://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
-
-* If you are creating a full-stack app, you need to configure the client origin: `heroku config:set CLIENT_ORIGIN=https://www.YOUR_DEPLOYED_CLIENT.com`
-
-### Deploying to Heroku
-
-* Push your code to Heroku: `git push heroku master`
+## Key Components
+ * All components live in the src directory. 
+ * The app houses the Header Bar, Landing Page, Dashboard, Logged Out and Footer components. 
+ * The Landing Page houses the Info (About), Login Form, and Registration Form components. 
+ * The Dashboard houses the Info (About), Question, Answer, Session Stats, and All Time Stats components.
+ * The Answer component houses the Answer Submit Form and the Feedback components.

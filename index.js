@@ -3,7 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const { PORT, CLIENT_ORIGIN } = require('./config');
@@ -25,11 +25,11 @@ app.use(
 
 app.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
-    skip: (req, res) => process.env.NODE_ENV === 'test'
+    skip: () => process.env.NODE_ENV === 'test'
   })
 );
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 passport.use(localStrategy);
 passport.use(jwtStrategy);
@@ -40,6 +40,21 @@ const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: tr
 app.use('/api/questions', jwtAuth, questionsRouter);
 app.use('/api/users/', usersRouter);
 app.use('/api/auth', authRouter);
+
+app.use((req, res, next) => {
+  const err = new Error('Not found');
+  err.status =  404;
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  if (err.status) {
+    const errBody = Object.assign({}, err, { message: err.message });
+    res.status(err.status).json(errBody);
+  } else {
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 console.log('app-server is deployed');
 
