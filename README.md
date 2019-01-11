@@ -2,7 +2,7 @@
 
 [logo]: img/speakeasy-logo2.png
 
-Do you find yourself nodding along with your smart tech friends, coworkers, or worse, your boss, as if you understand the latest tech jargon? Step into Speakeasy to learn the language through spaced repetition, up your stats and your status as you keep up to date with all the latest secret knocks that open doors... **_[Become one of the club here](https://speakeasy-client-two.herokuapp.com// "Speakeasy")_**&nbsp;
+Do you find yourself nodding along with your smart tech friends, coworkers, or worse, your boss, as if you understand the latest tech jargon? Step into Speakeasy to learn the language through spaced repetition, up your stats and your status as you keep up to date with all the latest secret knocks that open doors... **_[Become one of the club here](https://speakeasy-client-two.herokuapp.com "Speakeasy")_**&nbsp;
 
 #### Demo account:
 ##### username: ellafitzgerald
