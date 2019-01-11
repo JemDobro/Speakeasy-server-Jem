@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
   const missingField = requiredFields.find(field => !(field in req.body));
 
   if (missingField) {
-    const err = new Error(`This is a required field -- please enter a value. Thanks!`);
+    const err = new Error(`Required field. Please enter a value.`);
     err.status = 422;
     err.location = `${missingField}`;
     err.reason = 'ValidationError';
@@ -48,7 +48,7 @@ router.post('/', (req, res, next) => {
   );
 
   if (nonTrimmedField) {
-    const err = new Error(`This field cannot start or end with whitespace -- please check your entry. Thanks!`);
+    const err = new Error(`Cannot start or end with whitespace.`);
     err.status = 422;
     err.location = `${nonTrimmedField}`;
     err.reason = 'ValidationError';
@@ -67,7 +67,7 @@ router.post('/', (req, res, next) => {
   );
   if (tooSmallField) {
     const min = sizedFields[tooSmallField].min;
-    const err = new Error(`This field must be at least ${min} characters long -- please change your entry. Thanks!`);
+    const err = new Error(`Must be at least ${min} characters long.`);
     err.status = 422;
     err.location = `${tooSmallField}`;
     err.reason = 'ValidationError';
@@ -81,7 +81,7 @@ router.post('/', (req, res, next) => {
 
   if (tooLargeField) {
     const max = sizedFields[tooLargeField].max;
-    const err = new Error(`This field must be at most ${max} characters long --please change your entry. Thanks!`);
+    const err = new Error(`Must be at most ${max} characters long.`);
     err.status = 422;
     err.location = `${tooLargeField}`;
     err.reason = 'ValidationError';
